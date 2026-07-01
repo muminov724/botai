@@ -1,0 +1,6 @@
+# config.py va config.json fayllarini nusxalamang
+config.py
+config.json
+__pycache__/
+*.pyc
+.env
