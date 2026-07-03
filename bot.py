@@ -1,5 +1,6 @@
 import asyncio
 import logging
+import os
 import sys
 from aiogram import Bot, Dispatcher, Router, types, F
 from aiogram.filters import CommandStart
@@ -7,12 +8,15 @@ from aiogram.enums import ParseMode
 from aiogram.client.default import DefaultBotProperties
 from openai import AsyncOpenAI
 
-# Konfiguratsiyani yuklash
+# Konfiguratsiyani yuklash (Railway environment variables yoki config.py)
 try:
     from config import BOT_TOKEN, OPENAI_API_KEY
 except ImportError:
-    print("Xatolik: config.py fayli topilmadi!")
-    sys.exit(1)
+    BOT_TOKEN = os.environ.get("BOT_TOKEN")
+    OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
+    if not BOT_TOKEN or not OPENAI_API_KEY:
+        print("Xatolik: BOT_TOKEN va OPENAI_API_KEY environment variable sifatida berilmagan!")
+        sys.exit(1)
 
 # Loggingni sozlash
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
